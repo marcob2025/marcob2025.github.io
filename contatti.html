@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contatti - Parla con Lumina</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="scrolled"> <!-- Parte subito con lo sfondo bianco -->
+        <div class="container">
+            <a href="index.html" class="logo">LUMINA</a>
+            <nav>
+                <ul>
+                    <li><a href="chi-siamo.html">Chi Siamo</a></li>
+                    <li><a href="case-bioedilizia.html">Case Bioedilizia</a></li>
+                    <li><a href="fotovoltaico.html">Fotovoltaico</a></li>
+                    <li><a href="consulenza.html">Consulenza</a></li>
+                    <li><a href="contatti.html">Contatti</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+        </div>
+    </header>
+
+    <main>
+        <!-- PAGE HEADER -->
+        <section class="page-header">
+            <div class="container fade-in">
+                <h1>Entra in Contatto con Noi</h1>
+                <p>Siamo a tua completa disposizione per rispondere a ogni domanda o per fissare un appuntamento. Scegli il modo che preferisci per comunicare con il nostro team.</p>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section>
+            <div class="container">
+                <div class="contact-grid">
+                    <!-- Contact Form Column -->
+                    <div class="contact-form slide-up">
+                        <h3>Inviaci un Messaggio Diretto</h3>
+                        <p>Compila il modulo sottostante, ti risponderemo entro 24 ore lavorative.</p>
+                        <form action="#" method="POST"> <!-- L'attributo 'action' andrà configurato con un servizio di backend -->
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Il tuo nome completo" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="La tua email" required>
+                            </div>
+                            <div class="form-group">
+                                <select name="subject" required>
+                                    <option value="" disabled selected>Seleziona l'oggetto della richiesta...</option>
+                                    <option value="info_case">Informazioni Case in Bioedilizia</option>
+                                    <option value="info_fotovoltaico">Informazioni Impianti Fotovoltaici</option>
+                                    <option value="consulenza">Richiesta Consulenza Strategica</option>
+                                    <option value="altro">Altro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" rows="6" placeholder="Scrivi qui il tuo messaggio..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Invia Messaggio</button>
+                        </form>
+                    </div>
+
+                    <!-- Contact Info Column -->
+                    <div class="contact-info slide-up" style="transition-delay: 200ms;">
+                        <h3>I Nostri Riferimenti</h3>
+                        
+                        <div class="contact-info-block">
+                            <h4>Sede Operativa</h4>
+                            <p>Via dell'Innovazione, 123<br>00100 Roma, Italia</p>
+                        </div>
+                        
+                        <div class="contact-info-block">
+                            <h4>Email</h4>
+                            <p><a href="mailto:info@lumina.it">info@lumina.it</a></p>
+                        </div>
+
+                        <div class="contact-info-block">
+                            <h4>Telefono</h4>
+                            <p><a href="tel:+390123456789">+39 012 345 6789</a></p>
+                        </div>
+
+                        <div class="map-container">
+                            <!-- SOSTITUISCI QUESTO IFRAME CON QUELLO FORNITO DA GOOGLE MAPS -->
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2970.198337583852!2d12.49004221543419!3d41.88902057922119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f61b6532013ad%3A0x28f1c82e90850341!2sColosseo!5e0!3m2!1sit!2sit!4v1678886100000!5m2!1sit!2sit" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- (Inserire qui il codice del footer) -->
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
