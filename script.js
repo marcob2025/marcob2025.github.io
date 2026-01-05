@@ -1,59 +1,52 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     
-    // --- ANIMATION ON SCROLL ---
-    const animatedElements = document.querySelectorAll('.fade-in, .slide-up');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    animatedElements.forEach(element => observer.observe(element));
-
-    // --- SCROLLED HEADER ---
-    const header = document.querySelector('header');
-    const heroSection = document.querySelector('.hero');
-    // La logica per l'header cambia: diventa scuro su sfondo chiaro, chiaro su hero.
-    const updateHeaderStyle = () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-            // Se non c'è una hero section (pagine interne), mantieni lo stile scuro
-            if (!heroSection) {
-                 header.classList.remove('on-hero');
-            }
-        } else {
-             header.classList.remove('scrolled');
+    // Smooth Scroll quando clicchi sulle Card
+    window.showSection = function(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            // Offset per non coprire il titolo con la navbar fissa
+            const headerOffset = 80; 
+            const elementPosition = section.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+            window.scrollTo({
+                 top: offsetPosition,
+                 behavior: "smooth"
+            });
         }
-
-        // Questo gestisce il testo chiaro/scuro
-        if (heroSection && window.scrollY < heroSection.offsetHeight - 100) {
-            header.classList.add('on-hero');
-        } else {
-            header.classList.remove('on-hero');
-        }
-    };
-    
-    // Aggiungo la classe on-hero a tutte le pagine che hanno la hero section
-    if (heroSection) {
-        // Modifica del CSS per l'header in stato 'on-hero'
-        const style = document.createElement('style');
-        style.innerHTML = `
-            header.on-hero .logo, header.on-hero nav ul li a { color: var(--light-color); }
-            header.on-hero .menu-toggle .bar { background-color: var(--light-color); }
-        `;
-        document.head.appendChild(style);
-        updateHeaderStyle(); // Esegui subito per lo stato iniziale
     }
-    window.addEventListener('scroll', updateHeaderStyle);
 
+    // Navbar che diventa bianca quando scorri
+    const nav = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            nav.style.background = '#f7f7f0'; // Colore crema
+            nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        } else {
+            nav.style.background = 'transparent';
+            nav.style.boxShadow = 'none';
+        }
+    });
 
-    // --- MOBILE MENU ---
-    const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('nav');
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('is-active');
-        nav.classList.toggle('active');
+    // Menu Mobile Semplice
+    const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    burger.addEventListener('click', () => {
+        // Toggle visibilità menu
+        if (navLinks.style.display === 'flex') {
+            navLinks.style.display = 'none';
+        } else {
+            navLinks.style.display = 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '70px';
+            navLinks.style.right = '0';
+            navLinks.style.width = '100%';
+            navLinks.style.background = '#f7f7f0';
+            navLinks.style.padding = '20px';
+            navLinks.style.boxShadow = '0 5px 10px rgba(0,0,0,0.1)';
+            navLinks.style.zIndex = '999';
+        }
     });
 });
