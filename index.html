@@ -3,167 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gai Resolution | Industrial Solar & Bio-Living</title>
-    <meta name="description" content="Specialisti in parchi fotovoltaici industriali e case in bioedilizia chiavi in mano.">
-    <!-- Font: Montserrat per un look moderno e pulito -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Icone FontAwesome -->
+    <title>Gaia Resolution | Energy & Living</title>
+    <meta name="description" content="Eccellenza nel fotovoltaico industriale e bioedilizia di lusso.">
+    
+    <!-- Fonts: Playfair Display (Eleganza Titoli) + Montserrat (Modernità Testi) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Icone -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Libreria Animazioni (AOS) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- NAVIGAZIONE -->
+    <!-- PRELOADER (Effetto iniziale) -->
+    <div class="preloader">
+        <div class="logo-loader">Gaia<span class="dot">●</span>Resolution</div>
+    </div>
+
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="container nav-container">
-            <div class="logo">
-                Gai<span class="highlight-sun">●</span>resolution
-            </div>
+            <a href="index.html" class="logo">
+                Gaia<span class="highlight-sun">●</span>Resolution
+            </a>
             
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#solar">Fotovoltaico Industriale</a></li>
-                <li><a href="#bio">Bioedilizia</a></li>
-                <li><a href="#contatti">Contatti</a></li>
-            </ul>
-
-            <a href="#contatti" class="btn-cta">Richiedi Preventivo</a>
-
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
+
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <!-- Questi link punteranno alle future pagine -->
+                <li><a href="solar.html" class="nav-link">Solar Industry</a></li>
+                <li><a href="bio.html" class="nav-link">Bio Living</a></li>
+                <li><a href="vision.html" class="nav-link">Vision</a></li>
+                <li><a href="contatti.html" class="nav-link btn-contact">Contattaci</a></li>
+            </ul>
         </div>
     </nav>
 
-    <!-- HERO SECTION SPLIT SCREEN -->
-    <header class="hero" id="home">
-        <!-- Sfondo diviso: Sx Tecnico, Dx Naturale -->
-        <div class="split-bg">
-            <!-- Immagine Pannelli Solari Industriali -->
-            <div class="split-left" style="background-image: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop');">
-                <div class="overlay"></div>
+    <!-- HERO SECTION SPLIT -->
+    <header class="hero">
+        <div class="split-container">
+            <div class="split left">
+                <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?q=80&w=2070&auto=format&fit=crop');"></div>
+                <div class="split-content" data-aos="fade-right" data-aos-delay="300">
+                    <h2>Energy</h2>
+                    <p>Industria & Grandi Impianti</p>
+                </div>
             </div>
-            <!-- Immagine Interni Bioedilizia -->
-            <div class="split-right" style="background-image: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop');">
-                <div class="overlay"></div>
+            <div class="split right">
+                <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop');"></div>
+                <div class="split-content" data-aos="fade-left" data-aos-delay="300">
+                    <h2>Living</h2>
+                    <p>Bioedilizia & Design</p>
+                </div>
             </div>
         </div>
-
-        <div class="hero-content">
-            <h1>Costruiamo il domani.<br>Energia e Materia.</h1>
-            <p>Eccellenza nel fotovoltaico industriale e architettura sostenibile chiavi in mano.</p>
+        
+        <div class="hero-center-text" data-aos="zoom-in" data-aos-duration="1000">
+            <h1>Costruiamo il Domani</h1>
+            <p>Sinergia tra Sole e Terra</p>
+            <div class="scroll-down">
+                <span>Scopri</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
         </div>
     </header>
 
-    <!-- CARTE GALLEGGIANTI (IL CUORE DELLA NAVIGAZIONE) -->
-    <section class="gateway-cards">
-        <div class="container cards-wrapper">
-            
-            <!-- CARD 1: FOTOVOLTAICO INDUSTRIALE -->
-            <div class="card card-solar" onclick="showSection('solar')">
-                <div class="icon-box">
-                    <i class="fa-solid fa-industry"></i>
-                </div>
-                <h3>Industria & Grandi Impianti</h3>
-                <p>Progettazione e installazione di parchi fotovoltaici e soluzioni energetiche per aziende energivore.</p>
-                <span class="link-text">Soluzioni Business <i class="fa-solid fa-arrow-right"></i></span>
-            </div>
-
-            <!-- CARD 2: BIOEDILIZIA CHIAVI IN MANO -->
-            <div class="card card-bio" onclick="showSection('bio')">
-                <div class="icon-box icon-home">
-                    <i class="fa-solid fa-house-chimney-window"></i>
-                </div>
-                <h3>Bioedilizia Residenziale</h3>
-                <p>Case in legno di lusso, ecologiche e passive. Servizio completo chiavi in mano.</p>
-                <span class="link-text">Scopri le nostre Case <i class="fa-solid fa-arrow-right"></i></span>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SEZIONE DETTAGLIO: FOTOVOLTAICO -->
-    <section id="solar" class="detail-section solar-theme">
+    <!-- SEZIONE SCELTA (GATEWAY) -->
+    <section class="gateway section-padding">
         <div class="container">
-            <div class="section-header">
-                <span class="tag">Divisione Energy</span>
-                <h2>Fotovoltaico Industriale e Utility Scale</h2>
-                <div class="divider"></div>
+            <div class="section-title" data-aos="fade-up">
+                <span class="subtitle">I nostri mondi</span>
+                <h2>Scegli la tua dimensione</h2>
             </div>
-            <div class="grid-2">
-                <div class="text-col">
-                    <h3>Potenza ed Efficienza per il tuo Business</h3>
-                    <p>Siamo specializzati nella gestione di grandi commesse. Non installiamo solo pannelli, creiamo asset energetici che generano valore dal primo giorno.</p>
-                    <ul class="feature-list">
-                        <li><strong>Parchi Solari a Terra:</strong> Sviluppo e realizzazione EPC.</li>
-                        <li><strong>Fotovoltaico Industriale:</strong> Coperture capannoni e logistica.</li>
-                        <li><strong>Revamping & O&M:</strong> Modernizzazione impianti esistenti.</li>
-                    </ul>
-                    <a href="#contatti" class="btn-secondary">Parla con il reparto Tecnico</a>
-                </div>
-                <div class="img-col">
-                    <!-- Immagine Parco Solare -->
-                    <img src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6f?q=80&w=1974&auto=format&fit=crop" alt="Impianto fotovoltaico industriale">
-                </div>
+
+            <div class="cards-wrapper">
+                
+                <!-- CARD SOLAR -->
+                <a href="solar.html" class="card-wow solar-style" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1548231223-c40d2165215d?q=80&w=1976&auto=format&fit=crop');"></div>
+                    <div class="card-content">
+                        <i class="fa-solid fa-industry icon-float"></i>
+                        <h3>Solar Industry</h3>
+                        <p>Specialisti in parchi fotovoltaici e soluzioni per l'industria energivora.</p>
+                        <span class="btn-text">Esplora Divisione Energy</span>
+                    </div>
+                </a>
+
+                <!-- CARD BIO -->
+                <a href="bio.html" class="card-wow bio-style" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop');"></div>
+                    <div class="card-content">
+                        <i class="fa-solid fa-leaf icon-float"></i>
+                        <h3>Bio Living</h3>
+                        <p>Case di lusso in bioedilizia. Design sartoriale e consegna chiavi in mano.</p>
+                        <span class="btn-text">Esplora Divisione Living</span>
+                    </div>
+                </a>
+
             </div>
         </div>
     </section>
 
-    <!-- SEZIONE DETTAGLIO: BIOEDILIZIA -->
-    <section id="bio" class="detail-section bio-theme">
+    <!-- TEASER VISION (Intro breve) -->
+    <section class="vision-teaser" data-aos="fade-in">
         <div class="container">
-            <div class="section-header">
-                <span class="tag">Divisione Living</span>
-                <h2>La Tua Casa Ecologica, Chiavi in Mano</h2>
-                <div class="divider"></div>
-            </div>
-            <div class="grid-2 reverse">
-                <div class="text-col">
-                    <h3>Dal progetto all'ingresso: pensiamo a tutto noi</h3>
-                    <p>Dimentica lo stress del cantiere. Realizziamo case in bioedilizia di ultimissima generazione, garantendo tempi certi, costi bloccati e performance energetiche ai massimi livelli.</p>
-                    <ul class="feature-list">
-                        <li><strong>Tecnologia X-LAM/Telaio:</strong> Strutture sismo-resistenti.</li>
-                        <li><strong>Chiavi in Mano Reale:</strong> Finiture, impianti e arredamento.</li>
-                        <li><strong>Zero Emissioni:</strong> Case che producono più energia di quella che consumano.</li>
-                    </ul>
-                    <a href="#contatti" class="btn-secondary">Configura la tua Villa</a>
-                </div>
-                <div class="img-col">
-                    <!-- Immagine Casa Legno Moderna -->
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop" alt="Casa bioedilizia moderna">
-                </div>
+            <div class="vision-content">
+                <h2>Gaia Resolution è l'equilibrio.</h2>
+                <p>Non siamo semplici costruttori. Siamo ingegneri del futuro che integrano la potenza dell'energia rinnovabile con il comfort abitativo naturale.</p>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer id="contatti">
-        <div class="container footer-content">
-            <div class="footer-col">
-                <h4>Gai resolution</h4>
-                <p>Ingegneria sostenibile per l'industria e l'abitare.</p>
+    <!-- FOOTER MINIMAL -->
+    <footer>
+        <div class="container footer-flex">
+            <div class="footer-brand">
+                <h3>Gaia<span class="highlight-sun">●</span>Resolution</h3>
+                <p>Energy & Living Engineering</p>
             </div>
-            <div class="footer-col">
-                <h4>Contattaci</h4>
-                <p><strong>Sede:</strong> Via Esempio 10, Milano</p>
-                <p><strong>Tel:</strong> +39 02 0000 0000</p>
-                <p><strong>Email:</strong> info@gairesolution.it</p>
-            </div>
-            <div class="footer-col">
-                <h4>Social</h4>
+            <div class="footer-contact">
+                <a href="mailto:info@gaiaresolution.it" class="email-link">info@gaiaresolution.it</a>
                 <div class="socials">
-                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
                     <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Gai resolution - P.IVA 00000000000</p>
+        <div class="copyright">
+            &copy; 2024 Gaia Resolution. All rights reserved.
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
