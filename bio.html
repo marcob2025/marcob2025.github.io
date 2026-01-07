@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaia Resolution | Bio Living</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Libreria Animazioni -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- CSS CONDIVISO + SPECIFICO BIO --- */
+        :root {
+            --bg-body: #f9f9f7;
+            --text-main: #1a1a1a;
+            --color-bio: #2E5D4B;   /* Verde Foresta - Colore Dominante */
+            --color-wood: #8a6f53;  /* Marrone Legno - Accento */
+            --white: #ffffff;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR (Coerente ma accenti verdi) */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 20px 0; z-index: 1000; transition: var(--transition);
+        }
+        .navbar.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 15px 0; }
+        .nav-container { width: 90%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-main); }
+        .highlight-bio { color: var(--color-bio); } /* Pallino verde qui */
+
+        .nav-menu { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-link { text-decoration: none; color: var(--text-main); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; position: relative; }
+        .nav-link.active { color: var(--color-bio); }
+        .nav-link::after { background: var(--color-bio); } /* Sottolineatura verde */
+
+        .btn-contact { border: 1px solid var(--text-main); padding: 8px 25px; border-radius: 50px; }
+        .btn-contact:hover { background: var(--color-bio); color: var(--white); border-color: var(--color-bio); }
+        
+        .menu-toggle { display: none; cursor: pointer; } 
+        .bar { display: block; width: 25px; height: 2px; background: var(--text-main); margin: 5px auto; }
+
+        /* HERO BIO */
+        .hero-bio {
+            position: relative; height: 85vh; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background-attachment: scroll; /* Su mobile fixed può dare problemi, meglio scroll o gestito via JS */
+            background-position: center; background-size: cover;
+            background-image: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop');
+        }
+        /* Sfumatura scura ma calda */
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6)); }
+        
+        .hero-text { position: relative; z-index: 2; text-align: center; color: white; padding: 0 20px; }
+        .tagline { color: #a8d5ba; /* Verde chiaro pastello */ text-transform: uppercase; letter-spacing: 3px; font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
+        .hero-text h1 { font-family: var(--font-title); font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .hero-text p { font-size: 1.3rem; max-width: 600px; margin: 0 auto; opacity: 0.95; font-weight: 300; }
+
+        /* SEZIONI */
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section-padding { padding: 100px 0; }
+        .divider { width: 80px; height: 3px; background: var(--color-bio); margin: 20px auto 30px; }
+        .text-center { text-align: center; }
+        
+        /* FEATURE BOXES (ICONS) */
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 60px; }
+        .feature-box { text-align: center; padding: 20px; }
+        .icon-circle { 
+            width: 80px; height: 80px; border-radius: 50%; background: #e8f0eb; 
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            color: var(--color-bio); font-size: 2rem; transition: var(--transition);
+        }
+        .feature-box:hover .icon-circle { background: var(--color-bio); color: white; transform: rotate(360deg); }
+        .feature-box h3 { font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 10px; }
+
+        /* SPLIT SECTION (IMAGE + TEXT) */
+        .split-section { display: flex; align-items: center; gap: 60px; margin-top: 100px; }
+        .split-img { flex: 1; height: 500px; border-radius: 10px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .split-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .split-img:hover img { transform: scale(1.05); }
+        .split-text { flex: 1; }
+        .split-text h2 { font-family: var(--font-title); font-size: 2.5rem; margin-bottom: 20px; color: var(--color-bio); }
+        .split-text p { margin-bottom: 20px; color: #555; }
+        .check-list li { margin-bottom: 10px; display: flex; align-items: center; }
+        .check-list i { color: var(--color-bio); margin-right: 10px; }
+
+        /* HORIZONTAL SCROLL GALLERY (MODELS) */
+        .gallery-section { background: var(--text-main); color: white; padding: 100px 0; overflow: hidden; }
+        .gallery-header { margin-bottom: 50px; padding-left: 5%; }
+        .gallery-header h2 { font-family: var(--font-title); font-size: 3rem; color: white; }
+        .gallery-header span { color: var(--color-wood); text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Contenitore Scrollabile */
+        .horizontal-scroll {
+            display: flex; gap: 30px; overflow-x: auto; padding: 0 5% 50px;
+            scroll-snap-type: x mandatory; /* Snap effect su mobile */
+            -webkit-overflow-scrolling: touch;
+        }
+        .horizontal-scroll::-webkit-scrollbar { height: 6px; }
+        .horizontal-scroll::-webkit-scrollbar-thumb { background: var(--color-wood); border-radius: 10px; }
+        .horizontal-scroll::-webkit-scrollbar-track { background: #333; }
+
+        .model-card {
+            min-width: 400px; height: 500px; position: relative;
+            border-radius: 15px; overflow: hidden; scroll-snap-align: start;
+            cursor: pointer;
+        }
+        .model-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .model-card:hover .model-img { transform: scale(1.1); }
+        
+        .model-info {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        }
+        .model-info h3 { font-family: var(--font-title); font-size: 2rem; color: white; }
+        .model-info p { color: #ccc; font-size: 0.9rem; margin-top: 5px; }
+
+        /* CTA */
+        .cta-section { text-align: center; padding: 100px 0; background-color: #f1f5f3; }
+        .btn-bio { 
+            display: inline-block; background: var(--color-bio); color: white; 
+            padding: 15px 45px; border-radius: 0; /* Squadrato per eleganza */
+            font-weight: 500; text-transform: uppercase; letter-spacing: 2px;
+            transition: var(--transition);
+        }
+        .btn-bio:hover { background: var(--text-main); transform: translateY(-3px); }
+
+        /* FOOTER */
+        footer { background: #111; color: white; padding: 60px 0 20px; text-align: center; }
+        .footer-brand h3 { font-family: var(--font-title); font-size: 1.8rem; margin-bottom: 5px; }
+        .email-link { color: white; font-size: 1.1rem; text-decoration: none; border-bottom: 1px solid #444; padding-bottom: 5px; display: inline-block; margin: 20px 0; }
+        .copyright { font-size: 0.8rem; opacity: 0.4; margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+
+        /* MOBILE */
+        @media screen and (max-width: 960px) {
+            .hero-text h1 { font-size: 3rem; }
+            .features-grid { grid-template-columns: 1fr; gap: 30px; }
+            .split-section { flex-direction: column; }
+            .split-img { width: 100%; height: 300px; }
+            
+            .model-card { min-width: 85vw; height: 400px; } /* Card quasi full width su mobile */
+            
+            .menu-toggle { display: block; z-index: 1001; }
+            .nav-menu {
+                position: fixed; left: -100%; top: 0; width: 100%; height: 100vh;
+                background: white; flex-direction: column; justify-content: center;
+                transition: 0.3s; z-index: 999;
+            }
+            .nav-menu.active { left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Gaia<span class="highlight-bio">●</span>Resolution</a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="solar.html" class="nav-link">Solar Industry</a></li>
+                <li><a href="bio.html" class="nav-link active">Bio Living</a></li>
+                <li><a href="vision.html" class="nav-link">Vision</a></li>
+                <li><a href="mailto:info@gaiaresolution.it" class="nav-link btn-contact">Contattaci</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-bio">
+        <div class="hero-overlay"></div>
+        <div class="hero-text" data-aos="fade-up">
+            <span class="tagline">Divisione Living</span>
+            <h1>L'Armonia del Legno.<br>Il Comfort del Futuro.</h1>
+            <p>Case in bioedilizia dal design sartoriale. Sane, sismo-resistenti e in classe A4+.</p>
+        </div>
+    </header>
+
+    <!-- INTRO & PHILOSOPHY -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up">
+                <h2 style="font-family: var(--font-title); font-size: 2.5rem; color: var(--text-main);">Perché Bio?</h2>
+                <div class="divider"></div>
+                <p style="max-width: 800px; margin: 0 auto;">
+                    Abitare in una casa Gaia Resolution significa vivere in un ambiente che respira. Utilizziamo solo materiali naturali certificati, eliminando formaldeide e sostanze nocive. Il lusso oggi è la salute.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-circle"><i class="fa-solid fa-tree"></i></div>
+                    <h3>Struttura in Legno</h3>
+                    <p>Tecnologia X-LAM o Telaio. Resistenza sismica superiore e durabilità garantita a vita.</p>
+                </div>
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="icon-circle"><i class="fa-solid fa-temperature-arrow-up"></i></div>
+                    <h3>Comfort Termico</h3>
+                    <p>Isolamento naturale in fibra di legno o canapa. Fresco d'estate, caldo d'inverno.</p>
+                </div>
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="icon-circle"><i class="fa-solid fa-key"></i></div>
+                    <h3>Chiavi in Mano</h3>
+                    <p>Un unico referente. Dalle fondamenta alle tende, entri in casa senza pensieri.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPLIT SECTION (TECNICA & DESIGN) -->
+    <section class="section-padding" style="background: white;">
+        <div class="container">
+            <div class="split-section">
+                <div class="split-img" data-aos="fade-right">
+                    <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=2070&auto=format&fit=crop" alt="Interni minimal">
+                </div>
+                <div class="split-text" data-aos="fade-left">
+                    <h2>Design Sartoriale</h2>
+                    <p>Ogni casa è un pezzo unico, disegnato intorno alle tue abitudini. I nostri architetti fondono l'estetica contemporanea con il calore dei materiali organici.</p>
+                    <ul class="check-list">
+                        <li><i class="fa-solid fa-check"></i> Ampie vetrate per luce naturale.</li>
+                        <li><i class="fa-solid fa-check"></i> Pavimenti in rovere naturale o resina.</li>
+                        <li><i class="fa-solid fa-check"></i> Domotica integrata invisibile.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HORIZONTAL GALLERY (I MODELLI) - WOW EFFECT -->
+    <section class="gallery-section">
+        <div class="gallery-header container">
+            <span data-aos="fade-right">The Collection</span>
+            <h2 data-aos="fade-right" data-aos-delay="100">I Nostri Modelli</h2>
+        </div>
+
+        <div class="horizontal-scroll">
+            <!-- Card 1 -->
+            <div class="model-card">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop" class="model-img" alt="Villa Eos">
+                <div class="model-info">
+                    <h3>Villa Eos</h3>
+                    <p>Minimalismo Moderno - 180mq</p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="model-card">
+                <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=2080&auto=format&fit=crop" class="model-img" alt="Residenza Aura">
+                <div class="model-info">
+                    <h3>Residenza Aura</h3>
+                    <p>Stile Classico Contemporaneo - 240mq</p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="model-card">
+                <img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=2070&auto=format&fit=crop" class="model-img" alt="Chalet Zen">
+                <div class="model-info">
+                    <h3>Chalet Zen</h3>
+                    <p>Mountain Luxury - 150mq</p>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="model-card">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" class="model-img" alt="Loft Nature">
+                <div class="model-info">
+                    <h3>Loft Nature</h3>
+                    <p>Urban Green Living - 120mq</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container" data-aos="fade-up">
+            <h2 style="font-family: var(--font-title); font-size: 2.5rem; margin-bottom: 20px;">Sogni una casa così?</h2>
+            <p style="margin-bottom: 40px; color: #666;">Richiedi il catalogo completo o fissa un appuntamento in showroom.</p>
+            <a href="mailto:info@gaiaresolution.it" class="btn-bio">Configura la tua Casa</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-brand">
+                <h3>Gaia<span class="highlight-bio">●</span>Resolution</h3>
+            </div>
+            <a href="mailto:info@gaiaresolution.it" class="email-link">info@gaiaresolution.it</a>
+            <div class="copyright">
+                &copy; 2024 Gaia Resolution.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Navbar Scroll
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+    </script>
+</body>
+</html>
