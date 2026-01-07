@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaia Resolution | Solar Industry</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Libreria Animazioni -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- CSS CONDIVISO + SPECIFICO SOLAR --- */
+        :root {
+            --bg-body: #f9f9f7;
+            --text-main: #1a1a1a;
+            --color-solar: #D4AF37; /* Oro */
+            --color-dark: #0f1216;  /* Nero profondo */
+            --white: #ffffff;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR (Identica alla Home per coerenza) */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 20px 0; z-index: 1000; transition: var(--transition);
+        }
+        .navbar.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 15px 0; }
+        .nav-container { width: 90%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-main); }
+        .highlight-sun { color: var(--color-solar); }
+
+        .nav-menu { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-link { text-decoration: none; color: var(--text-main); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; position: relative; }
+        .nav-link.active { color: var(--color-solar); }
+        .btn-contact { border: 1px solid var(--text-main); padding: 8px 25px; border-radius: 50px; }
+        .btn-contact:hover { background: var(--text-main); color: var(--white); }
+        .menu-toggle { display: none; cursor: pointer; } 
+        .bar { display: block; width: 25px; height: 2px; background: var(--text-main); margin: 5px auto; }
+
+        /* HERO SOLAR */
+        .hero-solar {
+            position: relative; height: 80vh; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background-attachment: fixed; /* Parallax semplice */
+            background-position: center; background-size: cover; background-repeat: no-repeat;
+            background-image: url('https://images.unsplash.com/photo-1566093097221-ac2335b09e70?q=80&w=2070&auto=format&fit=crop');
+        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        
+        .hero-text { position: relative; z-index: 2; text-align: center; color: white; padding: 0 20px; }
+        .tagline { color: var(--color-solar); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
+        .hero-text h1 { font-family: var(--font-title); font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
+        .hero-text p { font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.9; }
+
+        /* SEZIONI GENERALI */
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section-padding { padding: 100px 0; }
+        
+        /* INTRO */
+        .intro-text { text-align: center; max-width: 800px; margin: 0 auto; }
+        .intro-text h2 { font-family: var(--font-title); font-size: 2.5rem; margin-bottom: 20px; }
+        .divider { width: 80px; height: 3px; background: var(--color-solar); margin: 0 auto 30px; }
+
+        /* SERVIZI GRID */
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 60px; }
+        .service-card {
+            background: white; padding: 40px 30px; border-top: 3px solid transparent;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: var(--transition);
+        }
+        .service-card:hover { transform: translateY(-10px); border-top-color: var(--color-solar); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .service-icon { font-size: 2.5rem; color: var(--color-solar); margin-bottom: 20px; }
+        .service-card h3 { font-family: var(--font-title); font-size: 1.5rem; margin-bottom: 15px; }
+        .service-card p { font-size: 0.95rem; color: #666; }
+
+        /* STATS COUNTER SECTION (WOW FACTOR) */
+        .stats-section {
+            background: var(--color-dark); color: white; padding: 80px 0; margin-top: 100px;
+            position: relative; overflow: hidden;
+        }
+        /* Background decorativo sfumato */
+        .stats-section::before {
+            content: ''; position: absolute; top: -50%; left: -20%; width: 50%; height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+        }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; position: relative; z-index: 2; }
+        .stat-item h3 { font-size: 3.5rem; color: var(--color-solar); font-weight: 700; font-family: var(--font-body); margin-bottom: 5px; }
+        .stat-item p { text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; opacity: 0.8; }
+
+        /* PROJECT GALLERY */
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 60px; }
+        .gallery-item { position: relative; height: 350px; overflow: hidden; border-radius: 8px; }
+        .gallery-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .gallery-item:hover .gallery-img { transform: scale(1.1); }
+        .gallery-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white; transform: translateY(20px); opacity: 0; transition: var(--transition);
+        }
+        .gallery-item:hover .gallery-overlay { transform: translateY(0); opacity: 1; }
+        .gallery-overlay h4 { font-family: var(--font-title); font-size: 1.5rem; }
+
+        /* CTA */
+        .cta-box { text-align: center; margin-top: 80px; }
+        .btn-gold { 
+            display: inline-block; background: var(--color-solar); color: white; 
+            padding: 15px 40px; border-radius: 50px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+        .btn-gold:hover { background: #b89628; transform: translateY(-3px); }
+
+        /* FOOTER */
+        footer { background: #111; color: white; padding: 60px 0 20px; text-align: center; }
+        .footer-brand h3 { font-family: var(--font-title); font-size: 1.8rem; margin-bottom: 5px; }
+        .email-link { color: white; font-size: 1.1rem; text-decoration: none; border-bottom: 1px solid #444; padding-bottom: 5px; display: inline-block; margin: 20px 0; }
+        .copyright { font-size: 0.8rem; opacity: 0.4; margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+
+        /* MOBILE */
+        @media screen and (max-width: 960px) {
+            .hero-text h1 { font-size: 2.5rem; }
+            .services-grid, .stats-grid, .gallery-grid { grid-template-columns: 1fr; gap: 40px; }
+            .stat-item { margin-bottom: 30px; }
+            
+            /* Mobile Menu Logic Styles */
+            .menu-toggle { display: block; z-index: 1001; }
+            .nav-menu {
+                position: fixed; left: -100%; top: 0; width: 100%; height: 100vh;
+                background: white; flex-direction: column; justify-content: center;
+                transition: 0.3s; z-index: 999;
+            }
+            .nav-menu.active { left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Gaia<span class="highlight-sun">●</span>Resolution</a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="solar.html" class="nav-link active">Solar Industry</a></li>
+                <li><a href="bio.html" class="nav-link">Bio Living</a></li>
+                <li><a href="vision.html" class="nav-link">Vision</a></li>
+                <li><a href="mailto:info@gaiaresolution.it" class="nav-link btn-contact">Contattaci</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-solar">
+        <div class="hero-overlay"></div>
+        <div class="hero-text" data-aos="fade-up">
+            <span class="tagline">Divisione Energy</span>
+            <h1>Potenza Pura.<br>Impatto Zero.</h1>
+            <p>Sviluppiamo infrastrutture fotovoltaiche utility-scale per guidare la transizione energetica industriale.</p>
+        </div>
+    </header>
+
+    <!-- INTRO & SERVICES -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="intro-text" data-aos="fade-up">
+                <h2>Ingegneria per l'Industria</h2>
+                <div class="divider"></div>
+                <p>Non installiamo pannelli, generiamo asset. Il nostro approccio è analitico e focalizzato sul rendimento a lungo termine. Dalla fattibilità alla connessione in rete, gestiamo la complessità.</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fa-solid fa-solar-panel service-icon"></i>
+                    <h3>Parchi a Terra</h3>
+                    <p>Sviluppo EPC di grandi impianti su terreno industriale o agricolo. Tracker solari di ultima generazione per massimizzare la produzione.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fa-solid fa-industry service-icon"></i>
+                    <h3>Commercial & Industrial</h3>
+                    <p>Soluzioni su coperture industriali per aziende energivore. Abbatti i costi operativi trasformando il tuo tetto in una centrale.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fa-solid fa-bolt service-icon"></i>
+                    <h3>Revamping & O&M</h3>
+                    <p>Ottimizzazione di impianti esistenti obsoleti. Sostituzione inverter, moduli e gestione manutenzione predittiva.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS (WOW FACTOR) -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 class="counter" data-target="150">0</h3>
+                    <p>MW Installati</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="85">0</h3>
+                    <p>Grandi Progetti</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="12000">0</h3>
+                    <p>Tonnellate CO2/Anno Risparmiate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECT GALLERY -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="intro-text">
+                <h2>Progetti Recenti</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item" data-aos="zoom-in">
+                    <img src="https://images.unsplash.com/photo-1548231223-c40d2165215d?q=80&w=1976&auto=format&fit=crop" class="gallery-img" alt="Progetto 1">
+                    <div class="gallery-overlay">
+                        <h4>Parco Solare - Puglia</h4>
+                        <p>12 MWp - Tracker System</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=2000&auto=format&fit=crop" class="gallery-img" alt="Progetto 2">
+                    <div class="gallery-overlay">
+                        <h4>Logistica Green - Milano</h4>
+                        <p>2.5 MWp - Rooftop Industrial</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-box" data-aos="fade-up">
+                <a href="mailto:info@gaiaresolution.it" class="btn-gold">Analizza il tuo impianto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-brand">
+                <h3>Gaia<span class="highlight-sun">●</span>Resolution</h3>
+            </div>
+            <a href="mailto:info@gaiaresolution.it" class="email-link">info@gaiaresolution.it</a>
+            <div class="copyright">
+                &copy; 2024 Gaia Resolution.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 1. Inizializza AOS
+        AOS.init({ duration: 1000, once: true });
+
+        // 2. Mobile Menu
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // 3. Navbar Scroll
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // 4. ANIMAZIONE CONTATORI (Counters)
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200; // Velocità animazione
+
+        // Funzione che fa partire il conteggio solo quando visibile
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    
+                    // Incremento fluido
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 20); // Velocità refresh
+                    } else {
+                        counter.innerText = target + (target > 1000 ? '+' : ''); // Aggiunge + se numero grande
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // Observer per far partire l'animazione quando arrivi alla sezione
+        let hasCounted = false;
+        const sectionStats = document.querySelector('.stats-section');
+        
+        window.addEventListener('scroll', () => {
+            const sectionPos = sectionStats.getBoundingClientRect().top;
+            const screenPos = window.innerHeight / 1.3;
+
+            if(sectionPos < screenPos && !hasCounted) {
+                animateCounters();
+                hasCounted = true; // Esegui una volta sola
+            }
+        });
+
+    </script>
+</body>
+</html>
