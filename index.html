@@ -4,32 +4,173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaia Resolution | Energy & Living</title>
-    <meta name="description" content="Eccellenza nel fotovoltaico industriale e bioedilizia di lusso.">
     
-    <!-- Fonts: Playfair Display (Eleganza Titoli) + Montserrat (Modernità Testi) -->
+    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-    
-    <!-- Icone -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <!-- Libreria Animazioni (AOS) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- CSS INTEGRATO --- */
+        :root {
+            --bg-body: #f9f9f7;
+            --text-main: #1a1a1a;
+            --color-solar: #D4AF37; /* Oro */
+            --color-bio: #2E5D4B;   /* Verde */
+            --color-dark: #0f1216;
+            --white: #ffffff;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- PRELOADER --- */
+        .preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--color-dark);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+            animation: fadeOut 0.5s ease-in-out 1.5s forwards;
+        }
+        .logo-loader { color: white; font-family: var(--font-title); font-size: 2rem; animation: slideUp 0.8s ease-out; }
+        .dot { color: var(--color-solar); }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 20px 0; z-index: 1000; transition: var(--transition);
+        }
+        .navbar.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 15px 0; }
+        .nav-container { width: 90%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-main); }
+        .highlight-sun { color: var(--color-solar); }
+
+        .nav-menu { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-link { text-decoration: none; color: var(--text-main); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: var(--color-solar); transition: var(--transition); }
+        .nav-link:hover::after { width: 100%; }
+
+        .btn-contact { border: 1px solid var(--text-main); padding: 8px 25px; border-radius: 50px; }
+        .btn-contact:hover { background: var(--text-main); color: var(--white); }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle { display: none; cursor: pointer; }
+        .bar { display: block; width: 25px; height: 2px; background: var(--text-main); margin: 5px auto; transition: 0.3s; }
+
+        /* --- HERO SPLIT --- */
+        .hero { position: relative; height: 100vh; width: 100%; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        .split-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; }
+        .split { position: relative; width: 50%; height: 100%; overflow: hidden; }
+        
+        .bg-img {
+            width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: transform 3s ease;
+        }
+        .split:hover .bg-img { transform: scale(1.05); }
+        .split::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1; }
+        
+        .split-content {
+            position: absolute; top: 50%; width: 100%; text-align: center;
+            z-index: 2; color: white; transform: translateY(-50%);
+        }
+        .split-content h2 { font-family: var(--font-title); font-size: 3rem; text-transform: uppercase; letter-spacing: 5px; opacity: 0.9; }
+        .split-content p { font-size: 1rem; letter-spacing: 2px; opacity: 0.8; }
+
+        .hero-center-text { position: absolute; z-index: 10; text-align: center; color: white; pointer-events: none; }
+        .hero-center-text h1 { font-family: var(--font-title); font-size: 4rem; margin-bottom: 10px; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .hero-center-text p { font-size: 1.2rem; font-style: italic; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+
+        .scroll-down {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            color: white; z-index: 10; display: flex; flex-direction: column; align-items: center;
+            font-size: 0.8rem; text-transform: uppercase; animation: bounce 2s infinite;
+        }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} }
+
+        /* --- CARDS --- */
+        .section-padding { padding: 100px 0; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-size: 3rem; color: var(--text-main); font-family: var(--font-title); }
+        .subtitle { color: var(--color-solar); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem; }
+
+        .cards-wrapper { display: flex; gap: 40px; justify-content: center; }
+        
+        .card-wow {
+            position: relative; width: 45%; height: 500px;
+            border-radius: 15px; overflow: hidden; display: flex; align-items: flex-end;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15); text-decoration: none;
+        }
+        .card-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; transition: transform 0.6s ease;
+        }
+        .card-wow::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 1; }
+        
+        .card-content { position: relative; z-index: 2; padding: 40px; color: white; transform: translateY(20px); transition: var(--transition); }
+        .card-content h3 { font-family: var(--font-title); font-size: 2rem; margin-bottom: 10px; }
+        .card-content p { opacity: 0.8; margin-bottom: 20px; font-size: 0.95rem; }
+        .icon-float { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+        .solar-style .icon-float { color: var(--color-solar); } 
+        .bio-style .icon-float { color: #8FBC8F; }
+        
+        .btn-text { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 5px; }
+
+        .card-wow:hover .card-bg { transform: scale(1.1); }
+        .card-wow:hover .card-content { transform: translateY(0); }
+
+        /* --- FOOTER --- */
+        footer { background: #111; color: white; padding: 60px 0 20px; text-align: center; }
+        .footer-brand h3 { font-family: var(--font-title); font-size: 1.8rem; margin-bottom: 5px; }
+        .email-link { color: white; font-size: 1.1rem; text-decoration: none; border-bottom: 1px solid #444; padding-bottom: 5px; display: inline-block; margin: 20px 0; }
+        .copyright { font-size: 0.8rem; opacity: 0.4; margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+
+        /* --- MOBILE --- */
+        @media screen and (max-width: 960px) {
+            .hero-center-text h1 { font-size: 2.2rem; }
+            .split-container { flex-direction: column; }
+            .split { width: 100%; height: 50%; }
+            .split-content h2 { font-size: 1.5rem; letter-spacing: 2px; }
+            
+            .menu-toggle { display: block; z-index: 1001; }
+            .nav-menu {
+                position: fixed; left: -100%; top: 0; width: 100%; height: 100vh;
+                background: white; flex-direction: column; justify-content: center;
+                transition: 0.3s; z-index: 999;
+            }
+            .nav-menu.active { left: 0; }
+            
+            .cards-wrapper { flex-direction: column; }
+            .card-wow { width: 100%; height: 380px; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- PRELOADER (Effetto iniziale) -->
+    <!-- PRELOADER -->
     <div class="preloader">
         <div class="logo-loader">Gaia<span class="dot">●</span>Resolution</div>
     </div>
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <div class="container nav-container">
-            <a href="index.html" class="logo">
-                Gaia<span class="highlight-sun">●</span>Resolution
-            </a>
+        <div class="nav-container">
+            <a href="#" class="logo">Gaia<span class="highlight-sun">●</span>Resolution</a>
             
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span>
@@ -38,36 +179,35 @@
             </div>
 
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <!-- Questi link punteranno alle future pagine -->
+                <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="solar.html" class="nav-link">Solar Industry</a></li>
                 <li><a href="bio.html" class="nav-link">Bio Living</a></li>
                 <li><a href="vision.html" class="nav-link">Vision</a></li>
-                <li><a href="contatti.html" class="nav-link btn-contact">Contattaci</a></li>
+                <li><a href="mailto:info@gaiaresolution.it" class="nav-link btn-contact">Contattaci</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- HERO SECTION SPLIT -->
+    <!-- HERO -->
     <header class="hero">
         <div class="split-container">
             <div class="split left">
                 <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?q=80&w=2070&auto=format&fit=crop');"></div>
-                <div class="split-content" data-aos="fade-right" data-aos-delay="300">
+                <div class="split-content" data-aos="fade-right">
                     <h2>Energy</h2>
-                    <p>Industria & Grandi Impianti</p>
+                    <p>Industria & Parchi</p>
                 </div>
             </div>
             <div class="split right">
                 <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop');"></div>
-                <div class="split-content" data-aos="fade-left" data-aos-delay="300">
+                <div class="split-content" data-aos="fade-left">
                     <h2>Living</h2>
                     <p>Bioedilizia & Design</p>
                 </div>
             </div>
         </div>
         
-        <div class="hero-center-text" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="hero-center-text" data-aos="zoom-in" data-aos-duration="1200">
             <h1>Costruiamo il Domani</h1>
             <p>Sinergia tra Sole e Terra</p>
             <div class="scroll-down">
@@ -77,74 +217,70 @@
         </div>
     </header>
 
-    <!-- SEZIONE SCELTA (GATEWAY) -->
-    <section class="gateway section-padding">
+    <!-- CARDS SECTION -->
+    <section class="section-padding">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <span class="subtitle">I nostri mondi</span>
+                <span class="subtitle">Le nostre divisioni</span>
                 <h2>Scegli la tua dimensione</h2>
             </div>
 
             <div class="cards-wrapper">
-                
-                <!-- CARD SOLAR -->
                 <a href="solar.html" class="card-wow solar-style" data-aos="fade-up" data-aos-delay="100">
                     <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1548231223-c40d2165215d?q=80&w=1976&auto=format&fit=crop');"></div>
                     <div class="card-content">
                         <i class="fa-solid fa-industry icon-float"></i>
                         <h3>Solar Industry</h3>
-                        <p>Specialisti in parchi fotovoltaici e soluzioni per l'industria energivora.</p>
-                        <span class="btn-text">Esplora Divisione Energy</span>
+                        <p>Grandi impianti e soluzioni energivore.</p>
+                        <span class="btn-text">Esplora</span>
                     </div>
                 </a>
 
-                <!-- CARD BIO -->
                 <a href="bio.html" class="card-wow bio-style" data-aos="fade-up" data-aos-delay="200">
                     <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop');"></div>
                     <div class="card-content">
                         <i class="fa-solid fa-leaf icon-float"></i>
                         <h3>Bio Living</h3>
-                        <p>Case di lusso in bioedilizia. Design sartoriale e consegna chiavi in mano.</p>
-                        <span class="btn-text">Esplora Divisione Living</span>
+                        <p>Case in bioedilizia chiavi in mano.</p>
+                        <span class="btn-text">Esplora</span>
                     </div>
                 </a>
-
             </div>
         </div>
     </section>
 
-    <!-- TEASER VISION (Intro breve) -->
-    <section class="vision-teaser" data-aos="fade-in">
-        <div class="container">
-            <div class="vision-content">
-                <h2>Gaia Resolution è l'equilibrio.</h2>
-                <p>Non siamo semplici costruttori. Siamo ingegneri del futuro che integrano la potenza dell'energia rinnovabile con il comfort abitativo naturale.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER MINIMAL -->
+    <!-- FOOTER -->
     <footer>
-        <div class="container footer-flex">
+        <div class="container">
             <div class="footer-brand">
                 <h3>Gaia<span class="highlight-sun">●</span>Resolution</h3>
-                <p>Energy & Living Engineering</p>
             </div>
-            <div class="footer-contact">
-                <a href="mailto:info@gaiaresolution.it" class="email-link">info@gaiaresolution.it</a>
-                <div class="socials">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
+            <a href="mailto:info@gaiaresolution.it" class="email-link">info@gaiaresolution.it</a>
+            <div class="copyright">
+                &copy; 2024 Gaia Resolution.
             </div>
-        </div>
-        <div class="copyright">
-            &copy; 2024 Gaia Resolution. All rights reserved.
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- SCRIPTS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Init Animazioni
+        AOS.init({ duration: 1000, once: true });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Navbar Scroll
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+    </script>
 </body>
 </html>
