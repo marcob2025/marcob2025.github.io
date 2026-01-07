@@ -3,100 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contatti - Parla con Lumina</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Gaia Resolution | Contatti</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Libreria Animazioni -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- CSS CONDIVISO + SPECIFICO CONTATTI --- */
+        :root {
+            --bg-body: #f9f9f7;
+            --text-main: #1a1a1a;
+            --color-solar: #D4AF37; 
+            --color-bio: #2E5D4B;
+            --white: #ffffff;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 20px 0; z-index: 1000; transition: var(--transition);
+        }
+        .navbar.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 15px 0; }
+        .nav-container { width: 90%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-main); }
+        .highlight-mix { background: linear-gradient(to right, var(--color-solar), var(--color-bio)); -webkit-background-clip: text; color: transparent; }
+
+        .nav-menu { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-link { text-decoration: none; color: var(--text-main); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-contact { border: 1px solid var(--text-main); padding: 8px 25px; border-radius: 50px; background: var(--text-main); color: white; }
+        
+        .menu-toggle { display: none; cursor: pointer; } 
+        .bar { display: block; width: 25px; height: 2px; background: var(--text-main); margin: 5px auto; }
+
+        /* CONTACT HERO WRAPPER */
+        .contact-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px; /* Space for navbar */
+            background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.85); backdrop-filter: blur(5px); }
+
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+
+        /* LEFT COLUMN: INFO */
+        .contact-info h1 { font-family: var(--font-title); font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
+        .contact-info p { font-size: 1.1rem; color: #555; margin-bottom: 40px; max-width: 90%; }
+        
+        .email-display { margin-top: 40px; }
+        .email-label { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; color: #888; display: block; margin-bottom: 5px; }
+        .big-email { 
+            font-family: var(--font-title); font-size: 2rem; color: var(--text-main); 
+            border-bottom: 2px solid var(--color-solar); transition: var(--transition);
+        }
+        .big-email:hover { color: var(--color-bio); border-color: var(--color-bio); }
+
+        /* RIGHT COLUMN: FORM */
+        .contact-form-wrapper {
+            background: white; padding: 50px; border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .form-group { position: relative; margin-bottom: 30px; }
+        
+        .form-input {
+            width: 100%; padding: 15px 0; border: none; border-bottom: 1px solid #ddd;
+            background: transparent; outline: none; font-family: var(--font-body); font-size: 1rem;
+            transition: var(--transition);
+        }
+        .form-input:focus { border-bottom-color: var(--color-solar); }
+        
+        /* Floating Label Logic */
+        .form-label {
+            position: absolute; top: 15px; left: 0; color: #999; font-size: 1rem; pointer-events: none; transition: 0.3s ease;
+        }
+        .form-input:focus ~ .form-label,
+        .form-input:not(:placeholder-shown) ~ .form-label {
+            top: -10px; font-size: 0.8rem; color: var(--color-solar);
+        }
+
+        .form-submit {
+            width: 100%; padding: 15px; background: var(--text-main); color: white; border: none;
+            font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;
+            cursor: pointer; transition: var(--transition); margin-top: 10px;
+        }
+        .form-submit:hover { background: var(--color-solar); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        /* FOOTER SIMPLIFIED */
+        footer { position: relative; z-index: 2; background: #111; color: white; padding: 40px 0; text-align: center; }
+        .copyright { font-size: 0.8rem; opacity: 0.4; }
+
+        /* MOBILE */
+        @media screen and (max-width: 960px) {
+            .contact-hero { padding: 120px 0 60px; min-height: auto; }
+            .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .contact-info h1 { font-size: 2.5rem; }
+            .big-email { font-size: 1.5rem; word-break: break-all; }
+            .contact-form-wrapper { padding: 30px; }
+            
+            .menu-toggle { display: block; z-index: 1001; }
+            .nav-menu {
+                position: fixed; left: -100%; top: 0; width: 100%; height: 100vh;
+                background: white; flex-direction: column; justify-content: center;
+                transition: 0.3s; z-index: 999;
+            }
+            .nav-menu.active { left: 0; }
+        }
+    </style>
 </head>
 <body>
 
-    <header class="scrolled"> <!-- Parte subito con lo sfondo bianco -->
-        <div class="container">
-            <a href="index.html" class="logo">LUMINA</a>
-            <nav>
-                <ul>
-                    <li><a href="chi-siamo.html">Chi Siamo</a></li>
-                    <li><a href="case-bioedilizia.html">Case Bioedilizia</a></li>
-                    <li><a href="fotovoltaico.html">Fotovoltaico</a></li>
-                    <li><a href="consulenza.html">Consulenza</a></li>
-                    <li><a href="contatti.html">Contatti</a></li>
-                </ul>
-            </nav>
-            <button class="menu-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
-        </div>
-    </header>
-
-    <main>
-        <!-- PAGE HEADER -->
-        <section class="page-header">
-            <div class="container fade-in">
-                <h1>Entra in Contatto con Noi</h1>
-                <p>Siamo a tua completa disposizione per rispondere a ogni domanda o per fissare un appuntamento. Scegli il modo che preferisci per comunicare con il nostro team.</p>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Gaia<span class="highlight-mix">●</span>Resolution</a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
-        </section>
 
-        <!-- CONTACT SECTION -->
-        <section>
-            <div class="container">
-                <div class="contact-grid">
-                    <!-- Contact Form Column -->
-                    <div class="contact-form slide-up">
-                        <h3>Inviaci un Messaggio Diretto</h3>
-                        <p>Compila il modulo sottostante, ti risponderemo entro 24 ore lavorative.</p>
-                        <form action="#" method="POST"> <!-- L'attributo 'action' andrà configurato con un servizio di backend -->
-                            <div class="form-group">
-                                <input type="text" name="name" placeholder="Il tuo nome completo" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" name="email" placeholder="La tua email" required>
-                            </div>
-                            <div class="form-group">
-                                <select name="subject" required>
-                                    <option value="" disabled selected>Seleziona l'oggetto della richiesta...</option>
-                                    <option value="info_case">Informazioni Case in Bioedilizia</option>
-                                    <option value="info_fotovoltaico">Informazioni Impianti Fotovoltaici</option>
-                                    <option value="consulenza">Richiesta Consulenza Strategica</option>
-                                    <option value="altro">Altro</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <textarea name="message" rows="6" placeholder="Scrivi qui il tuo messaggio..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Invia Messaggio</button>
-                        </form>
-                    </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="solar.html" class="nav-link">Solar Industry</a></li>
+                <li><a href="bio.html" class="nav-link">Bio Living</a></li>
+                <li><a href="vision.html" class="nav-link">Vision</a></li>
+                <li><a href="contatti.html" class="nav-link btn-contact">Contattaci</a></li>
+            </ul>
+        </div>
+    </nav>
 
-                    <!-- Contact Info Column -->
-                    <div class="contact-info slide-up" style="transition-delay: 200ms;">
-                        <h3>I Nostri Riferimenti</h3>
-                        
-                        <div class="contact-info-block">
-                            <h4>Sede Operativa</h4>
-                            <p>Via dell'Innovazione, 123<br>00100 Roma, Italia</p>
-                        </div>
-                        
-                        <div class="contact-info-block">
-                            <h4>Email</h4>
-                            <p><a href="mailto:info@lumina.it">info@lumina.it</a></p>
-                        </div>
-
-                        <div class="contact-info-block">
-                            <h4>Telefono</h4>
-                            <p><a href="tel:+390123456789">+39 012 345 6789</a></p>
-                        </div>
-
-                        <div class="map-container">
-                            <!-- SOSTITUISCI QUESTO IFRAME CON QUELLO FORNITO DA GOOGLE MAPS -->
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2970.198337583852!2d12.49004221543419!3d41.88902057922119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f61b6532013ad%3A0x28f1c82e90850341!2sColosseo!5e0!3m2!1sit!2sit!4v1678886100000!5m2!1sit!2sit" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
+    <!-- MAIN CONTACT SECTION -->
+    <div class="contact-hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="contact-grid">
+                
+                <!-- Left: Text -->
+                <div class="contact-info" data-aos="fade-right">
+                    <h1>Inizia la<br>Trasformazione.</h1>
+                    <p>Che si tratti di un parco fotovoltaico da 5MW o della villa dei tuoi sogni, ogni grande progetto inizia con una conversazione. Raccontaci la tua visione.</p>
+                    
+                    <div class="email-display">
+                        <span class="email-label">Scrivici direttamente</span>
+                        <a href="mailto:info@gaiaresolution.it" class="big-email">info@gaiaresolution.it</a>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
 
+                <!-- Right: Form -->
+                <div class="contact-form-wrapper" data-aos="fade-left" data-aos-delay="200">
+                    <form action="#" onsubmit="event.preventDefault(); alert('Grazie per averci contattato. Ti risponderemo a breve.');">
+                        
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder=" " required>
+                            <label class="form-label">Nome e Cognome</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" class="form-input" placeholder=" " required>
+                            <label class="form-label">Email Aziendale / Personale</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-input" style="padding-top: 15px; color: #555;">
+                                <option value="" disabled selected>Seleziona Divisione</option>
+                                <option value="solar">Solar Industry (Energy)</option>
+                                <option value="bio">Bio Living (Edilizia)</option>
+                                <option value="other">Altro / Generale</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea class="form-input" rows="3" placeholder=" " required></textarea>
+                            <label class="form-label">Parlaci del tuo progetto</label>
+                        </div>
+
+                        <button type="submit" class="form-submit">Invia Richiesta</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
     <footer>
-        <!-- (Inserire qui il codice del footer) -->
+        <div class="container">
+            <div class="copyright">
+                &copy; 2024 Gaia Resolution. Energy & Living Engineering.
+            </div>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Auto-close menu on click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar Scroll
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+    </script>
 </body>
 </html>
